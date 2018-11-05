@@ -369,10 +369,15 @@ if ($hz eq '--can') {
 		die "Usage: $0 HZ\n";
 	}
 
-	@val = @{$canned_values{$hz}};
-	if (!defined(@val)) {
-		@val = compute_values($hz);
-	}
+#	@val = @{$canned_values{$hz}};
+#	if (!defined(@val)) {
+#		@val = compute_values($hz);
+#	}
+
+	# https://github.com/LineageOS/android_kernel_motorola_msm8226/blob/cm-11.0/kernel/timeconst.pl#L372
+	$cv = $canned_values{$hz};
+	@val = defined($cv) ? @$cv : compute_values($hz);
+
 	output($hz, @val);
 }
 exit 0;
